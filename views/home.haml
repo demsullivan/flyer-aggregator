@@ -1,0 +1,14 @@
+%table(cellpadding=5)
+  %tr
+    %td Price
+    %td Item
+    %td Store
+  - @categories.each do |category|
+    %tr
+      %td(colspan="3")= category.name
+    - category.items.each do |item|
+      %tr
+        %td= item.price
+        %td #{item.name} (#{item.description})
+        %td= item.store
+    
