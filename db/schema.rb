@@ -13,8 +13,23 @@
 
 ActiveRecord::Schema.define(:version => 20140530164841) do
 
+  create_table "ar_users", :force => true do |t|
+    t.string "email"
+    t.string "hashed_password"
+    t.string "salt"
+  end
+
+  add_index "ar_users", ["email"], :name => "index_ar_users_on_email", :unique => true
+
   create_table "categories", :force => true do |t|
+    t.string  "name"
+    t.integer "ar_users_id"
+  end
+
+  create_table "companies", :force => true do |t|
     t.string "name"
+    t.string "base_url"
+    t.string "parser_name"
   end
 
   create_table "items", :force => true do |t|
@@ -22,7 +37,14 @@ ActiveRecord::Schema.define(:version => 20140530164841) do
     t.string  "name"
     t.string  "description"
     t.string  "store"
+    t.integer "store_id"
     t.integer "category_id"
+  end
+
+  create_table "user_stores", :force => true do |t|
+    t.integer "store_id"
+    t.integer "companies_id"
+    t.integer "ar_users_id"
   end
 
 end

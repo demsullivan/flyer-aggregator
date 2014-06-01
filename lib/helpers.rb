@@ -1,5 +1,4 @@
 module Helpers
-
   def js(path)
     %Q{<script src="#{path}"></script>}
   end

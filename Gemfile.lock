@@ -67,6 +67,14 @@ GEM
     sinatra-activerecord (2.0.2)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
+    sinatra-bootstrap (0.6.1)
+      sinatra (>= 1.0)
+      sinatra-outputbuffer
+    sinatra-outputbuffer (0.1.0)
+      sinatra (>= 1.0.a)
+    sinatra-simple-authentication (1.0.0)
+      haml
+      sinatra
     sqlite3 (1.3.9)
     thin (1.6.2)
       daemons (>= 1.0.9)
@@ -93,5 +101,7 @@ DEPENDENCIES
   sass
   sinatra
   sinatra-activerecord
+  sinatra-bootstrap
+  sinatra-simple-authentication
   sqlite3
   thin
