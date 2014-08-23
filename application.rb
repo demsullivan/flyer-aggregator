@@ -1,9 +1,11 @@
 require 'bundler/setup'
 Bundler.require :default
 require 'sinatra/base'
+#require 'rack-flash'
 
-Dir[File.expand_path('./lib/*.rb')].each {|f| require f }
-Dir[File.expand_path('./models/*.rb')].each {|f| require f }
+%w(lib models).each do |l|
+  Dir[File.expand_path("./#{l}/*.rb")].each {|f| require f }
+end
 
 class Website < Sinatra::Base
   root_dir = File.dirname(__FILE__)
@@ -11,18 +13,25 @@ class Website < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   register Sinatra::Bootstrap::Assets
   register Sinatra::SimpleAuthentication
+ 
+  #use Rack::Flash, :sweep => true
+  use FlyerAjax::Controller
 
   set :environment, ENV['RACK_ENV'] || :development
   set :root, root_dir
   set :app_file, __FILE__
   set :static, true
 
+  configure :development do
+    enable :logging
+  end
+
   helpers do      
     include Helpers
   end
 
   before do
-    login_required unless %w(/login, /logout, /signup).include? request.path_info
+    #login_required unless %w(/login /logout /signup /css/bootstrap.min.css).include? request.path_info
   end
 
   get '/application.css' do
@@ -34,6 +43,7 @@ class Website < Sinatra::Base
   end
 
   get '/' do
+    #login_required
     @categories = Category.all
     haml :home
   end

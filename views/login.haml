@@ -1,6 +1,8 @@
 - container :div do
   %form{:action => "/login", :method => "POST", :class => "form-signin", :role => "form"}
     %h2{:class => "form-signin-heading"} Flyer Aggregator Signin
+    - if flash
+      %div= flash[:error]
     %input{:type => "email", :class => "form-control", :placeholder => "Email address"}
     %input{:type => "password", :class => "form-control", :placeholder => "Password"}
     %button{:class => "btn btn-lg btn-primary btn-block", :type => "submit"} Sign in

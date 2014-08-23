@@ -58,7 +58,10 @@ module Stores
         price = item.search('p.productPrice').text.gsub(/[\r\n\t]/, '')
         price.gsub!(/lb/, ' lb')
         price.gsub!(/ea/, ' ea')
-        price.gsub!(/\$\d+/) {|num| '$%.02f' % (num.delete('$').to_i / 100.0) }
+        price.gsub!(/\$\d+/) do |num|
+          return "#{num[0..-3]}.#{num[-2..num.length]}" if num.length >= 4
+          return "#{num}.00" if num.length <= 3
+        end
 
         return :price => price, :name => item.search('p.productTitle').text.gsub(/[\r\n\t]/, ''),
         :description => item.search('p span').text.gsub(/[\r\n\t]/, '')
